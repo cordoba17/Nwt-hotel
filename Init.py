@@ -9,4 +9,5 @@ customer_repository =CustomerRepository()
 customer_service = CustomerService()
 
 customer_service.createCustomer(customer)
+customer_service.createCustomer(customer)
 customer_repository.createCustomerReposity(customer)

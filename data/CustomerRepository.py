@@ -24,4 +24,6 @@ class CustomerRepository:
         occupation = customer.occupation
         customer_data.append(occupation)
 
-        print(customer_data)
+        self.customers.append(customer_data)
+        print(self.customers)
+
