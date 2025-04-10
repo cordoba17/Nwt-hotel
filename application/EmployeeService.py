@@ -1,9 +1,14 @@
 
 from domain.Employee import Employee
+from data.EmployeeRepository import EmployeeRepository
 
 class EmployeeService:
 
-    def createEmployee(self, employee : Employee):
+    def __init__(self):
+        self.employee_repository = EmployeeRepository()
+        self.employee = Employee()
+
+    def createEmployee(self, employee):
         id = int(input("Ingrese su identificacion"))
         employee.id = id
         name = input("Ingrese su nombre:")
@@ -20,3 +25,5 @@ class EmployeeService:
         employee.origin = origin
         occupation = input("Ocupación")
         employee.occupation = occupation
+
+        self.employee_repository.createEmployeeReposity(employee)
