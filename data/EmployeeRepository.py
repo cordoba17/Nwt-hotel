@@ -4,9 +4,11 @@
 from domain.Employee import Employee
 
 class EmployeeRepository:
-    employees = []
 
-    def createemployeeReposity(self, employee: Employee):
+    def __init__(self):
+        self.employees = []
+
+    def createEmployeeReposity(self, employee: Employee):
         employee_data = []
         id = employee.id
         employee_data.append(id)
@@ -27,4 +29,7 @@ class EmployeeRepository:
 
         self.employees.append(employee_data)
         print(self.employees)
+
+
+
     

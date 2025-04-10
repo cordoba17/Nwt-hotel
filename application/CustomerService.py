@@ -1,12 +1,15 @@
 
 
 from domain.Customer import Customer
+from data.CustomerRepository import CustomerRepository
 
 class CustomerService:
 
+    def __init__(self):
+        self.customer_repository = CustomerRepository()
+        self.customer = Customer(None,None,None,None,None,None,None,None)
 
-
-    def createCustomer(self, customer: Customer):
+    def createCustomer(self, customer, db):
         id = int(input("Ingrese su identificacion"))
         customer.id = id
         name = input("Ingrese su nombre:")
@@ -23,3 +26,12 @@ class CustomerService:
         customer.origin = origin
         occupation = input("Ocupación")
         customer.occupation = occupation
+
+        self.customer_repository.createCustomerReposity(db,customer)
+
+
+    def login(self,db,  email, password):
+        if self.customer_repository.login(db, email, password):
+            print("Login exitoso")
+        else:
+            print("Error en el login")
