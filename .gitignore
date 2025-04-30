@@ -1,0 +1,13 @@
+# Ignorar entorno virtual de Python
+venv/
+
+# Archivos de Python que no se deben subir
+__pycache__/
+*.py[cod]
+
+# Configuraciones locales de PyCharm
+.idea/
+
+# Otros archivos comunes que no se suben
+*.log
+*.sqlite3
