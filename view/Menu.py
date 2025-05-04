@@ -7,7 +7,7 @@ from data.ConexionMySQL import Conexion
 
 
 class Menu:
-    db = Conexion(host='localhost', port=3307, user='root', password="", database='hotel_cesde')
+    db = Conexion(host='localhost', port=3306, user='root', password="Eukzchoto3856", database='hotel_cesde')
     db.connect()
     def __init__(self):
         self.customer = Customer(None,None,None,None,None,None,None,None)
