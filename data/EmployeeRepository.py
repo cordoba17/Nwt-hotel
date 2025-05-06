@@ -26,6 +26,8 @@ class EmployeeRepository:
         employee_data.append(origin)
         occupation = employee.occupation
         employee_data.append(occupation)
+        rol = employee.rol
+        rol_data.append(rol)
 
         self.employees.append(employee_data)
         print(self.employees)

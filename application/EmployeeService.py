@@ -25,5 +25,7 @@ class EmployeeService:
         employee.origin = origin
         occupation = input("Ocupación")
         employee.occupation = occupation
+        rol = input("Rol")
+        employee.rol = rol
 
         self.employee_repository.createEmployeeReposity(employee)

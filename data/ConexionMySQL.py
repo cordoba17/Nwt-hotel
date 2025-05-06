@@ -1,7 +1,4 @@
-import mysql
-from mysql import connector
-
-
+import mysql.connector
 
 class Conexion:
 
@@ -23,7 +20,8 @@ class Conexion:
                 port=self.port,
                 user=self.user,
                 password=self.password,
-                database=self.database
+                database=self.database,
+               
             )
             print("Conexion establecida")
         except mysql.connector.Error as err:

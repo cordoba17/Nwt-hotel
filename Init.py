@@ -4,6 +4,9 @@ from data.CustomerRepository import CustomerRepository
 from view.Menu import Menu
 from data.ConexionMySQL import Conexion
 
+conexion = Conexion("localhost", 3306, "root", "", "hotel_cesde")
+conexion.connect()
+
 
 """
 customer = Customer(None,None,None,None,None,None,None,None)

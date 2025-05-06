@@ -5,15 +5,14 @@ from data.ConexionMySQL import Conexion
 class CustomerRepository:
 
     def __init__(self):
-        self.conexion = Conexion(None, None, None, None, None)
         self.customer = Customer(None, None, None, None, None, None, None, None)
 
 
     @staticmethod
     def from_row(row):
-        return Customer(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8])
+        return Customer(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
 
-    def createCustomerReposity(self,db, customer):
+    def create_customer_repository(self,db, customer):
         self.insert_customer(db,customer)
 
 
@@ -24,7 +23,7 @@ class CustomerRepository:
 
 
     def select_customer(self,  db, customer_id):
-        query = "SELECT * FROM customer WHERE id = %s"
+        query = "SELECT * FROM customer WHERE customer_id = %s"
         result = db.execute_query(query, (customer_id,))
         if result:
             return self.from_row(result[0])
@@ -46,12 +45,12 @@ class CustomerRepository:
             return []
 
     def update_customer(self,  db, customer):
-        query = "UPDATE customer SET name = %s, last_name = %s, email = %s, password = %s, status = %s, origin = %s, occupation = %s WHERE id = %s"
+        query = "UPDATE customer SET name = %s, last_name = %s, email = %s, password = %s, status = %s, origin = %s, occupation = %s WHERE customer_id = %s"
         values = (customer.name, customer.last_name, customer.email, customer.password, customer.status, customer.origin, customer.occupation, customer.id)
         db.execute_query(query, values)
 
     def delete_customer(self,  db, customer_id):
-        query = "DELETE FROM customer WHERE id = %s"
+        query = "DELETE FROM customer WHERE customer_id = %s"
         db.execute_query(query, (customer_id,))
 
 
