@@ -1,31 +1,27 @@
-
 from domain.Employee import Employee
 from data.EmployeeRepository import EmployeeRepository
 
 class EmployeeService:
+    def __init__(self, conexion):
+        self.employee_repository = EmployeeRepository(conexion)
 
-    def __init__(self):
-        self.employee_repository = EmployeeRepository()
-        self.employee = Employee()
+    def createEmployee(self):
+        id = int(input("Ingrese su identificacion: "))
+        name = input("Ingrese su nombre: ")
+        last_name = input("Ingrese su apellido: ")
+        email = input("Ingrese su correo: ")
+        password = input("Ingrese su password: ")
+        status = input("¿Está activo? (True/False): ").lower() == "true"
+        rol = input("Rol: ")
 
-    def createEmployee(self, employee):
-        id = int(input("Ingrese su identificacion"))
-        employee.id = id
-        name = input("Ingrese su nombre:")
-        employee.name = name
-        last_name = input("Ingrese su apellido")
-        employee.last_name = last_name
-        email = input("Ingrese su correo")
-        employee.email = email
-        password = input("Ingrese su password")
-        employee.password = password
-        status = input("Ingrese True Si esta activo")
-        employee.status = status
-        origin = input("Ciudad de Origen ")
-        employee.origin = origin
-        occupation = input("Ocupación")
-        employee.occupation = occupation
-        rol = input("Rol")
-        employee.rol = rol
+        employee = Employee(id, name, last_name, email, password, status, rol)
+        self.employee_repository.create_employee_repository(employee)
 
-        self.employee_repository.createEmployeeReposity(employee)
+    def login_employee(self):
+        email = input("Ingrese su correo: ")
+        password = input("Ingrese su contraseña: ")
+
+        if self.employee_repository.login(email, password):
+            print("Login exitoso como empleado.")
+        else:
+            print("Correo o contraseña incorrectos.")

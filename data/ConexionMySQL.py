@@ -1,8 +1,6 @@
 import mysql.connector
 
 class Conexion:
-
-
     def __init__(self, host, port, user, password, database):
         self.host = host
         self.port = port
@@ -10,8 +8,6 @@ class Conexion:
         self.password = password
         self.database = database
         self.connection = None
-
-
 
     def connect(self):
         try:
@@ -21,12 +17,10 @@ class Conexion:
                 user=self.user,
                 password=self.password,
                 database=self.database,
-               
             )
             print("Conexion establecida")
         except mysql.connector.Error as err:
             print("Error al conectar a la base de datos:", err)
-
 
     def disconnect(self):
         if self.connection:
@@ -34,7 +28,7 @@ class Conexion:
             print("Conexion cerrada.")
 
     def execute_query(self, query, params=None):
-        cursor = self.connection.cursor(buffered = True)
+        cursor = self.connection.cursor(buffered=True)
         try:
             cursor.execute(query, params)
             self.connection.commit()
@@ -48,3 +42,13 @@ class Conexion:
         finally:
             cursor.close()
 
+    def fetch_one(self, query, params=None):
+        cursor = self.connection.cursor(dictionary=True)
+        try:
+            cursor.execute(query, params)
+            return cursor.fetchone()
+        except mysql.connector.Error as err:
+            print("Error al ejecutar la consulta:", err)
+            return None
+        finally:
+            cursor.close()

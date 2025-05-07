@@ -1,37 +1,41 @@
-from domain.Customer import Customer
 from data.ConexionMySQL import Conexion
-from data.CustomerRepository import CustomerRepository
 from application.CustomerService import CustomerService
+from application.EmployeeService import EmployeeService
+from data.CustomerRepository import CustomerRepository
 
 class Menu:
     db = Conexion(host='localhost', port=3306, user='root', password="", database='hotel_cesde')
     db.connect()
 
     def __init__(self):
-        self.customer = Customer(None, None, None, None, None, None, None, None)
-        self.customer_repo = CustomerRepository()
-        self.customer_service = CustomerService(self.customer_repo)
+        self.customer_service = CustomerService(CustomerRepository())
+        self.employee_service = EmployeeService(self.db)  # Asegúrate que EmployeeService use la db si la necesitas
 
     def app(self):
-        init = int(input("Presione 1 para iniciar: "))
-        while init != 0:
-            option = int(input("1. Login\n2. Registro\n3. Salir\nSeleccione opción: "))
+        while True:
+            print("\n--- MENÚ PRINCIPAL ---")
+            option = int(input("1. Login Cliente\n2. Registro Cliente\n3. Login Empleado\n4. Registro Empleado\n5. Salir\nSeleccione opción: "))
 
             if option == 1:
-                print(self.login())
+                self.login_cliente()
             elif option == 2:
                 self.customer_service.createCustomer(self.db)
             elif option == 3:
+                self.employee_service.login_employee()
+            elif option == 4:
+                self.employee_service.createEmployee()  # Llamar al método correcto aquí
+            elif option == 5:
                 print("Saliendo...")
+                self.db.disconnect()
                 break
             else:
-                print("Seleccione una opción correcta")
+                print("Seleccione una opción válida.")
 
-    def login(self):
+    def login_cliente(self):
         email = input("Ingrese su correo: ")
         password = input("Ingrese su contraseña: ")
         success = self.customer_service.login(self.db, email, password)
         if success:
-            return "Login exitoso"
+            print("Login de cliente exitoso")
         else:
-            return "Login fallido"
+            print("Login de cliente fallido")
