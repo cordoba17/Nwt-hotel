@@ -18,14 +18,14 @@ class CustomerRepository:
 
 
     def insert_customer(self,db,customer):
-        query = "INSERT INTO customer (customer_id, name, last_name, email, password, status, origin , occupation) VALUES (%s,%s, %s, %s, %s, %s, %s, %s)"
+        query = "INSERT INTO customer (id, name, last_name, email, password, status, origin , occupation) VALUES (%s,%s, %s, %s, %s, %s, %s, %s)"
         values = (customer.id, customer.name, customer.last_name, customer.email, customer.password, customer.status, customer.origin, customer.occupation)
         db.execute_query(query, values)
 
 
-    def select_customer(self,  db, customer_id):
+    def select_customer(self,  db, id):
         query = "SELECT * FROM customer WHERE id = %s"
-        result = db.execute_query(query, (customer_id,))
+        result = db.execute_query(query, (id,))
         if result:
             return self.from_row(result[0])
         else:
@@ -50,9 +50,9 @@ class CustomerRepository:
         values = (customer.name, customer.last_name, customer.email, customer.password, customer.status, customer.origin, customer.occupation, customer.id)
         db.execute_query(query, values)
 
-    def delete_customer(self,  db, customer_id):
+    def delete_customer(self,  db, id):
         query = "DELETE FROM customer WHERE id = %s"
-        db.execute_query(query, (customer_id,))
+        db.execute_query(query, (id,))
 
 
 

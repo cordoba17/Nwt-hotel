@@ -1,6 +1,3 @@
-
-# application/ServiceService.py
-
 from domain.Service import Service
 from data.ServiceRepository import ServiceRepository
 
@@ -14,3 +11,12 @@ class ServiceService:
 
     def listar_servicios(self):
         return self.repository.get_all_services()
+
+    def editar_servicio(self, service_id, name, description, price):
+        for servicio in self.repository.services:
+            if servicio.service_id == service_id:
+                servicio.name = name
+                servicio.description = description
+                servicio.price = price
+                return
+        print("Servicio no encontrado.")
