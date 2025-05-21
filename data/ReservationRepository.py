@@ -26,29 +26,27 @@ class ReservationRepository:
             self.conexion.execute_query(insert_user, user_data)
 
         insert_reservation = """
-            INSERT INTO reservations (user_id, date_reservation, hour_reservation, room_number)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO reservations (user_id, date_reservation, hour_reservation, room_number, service_id)
+            VALUES (%s, %s, %s, %s, %s)
         """
         reservation_data = (
             reservation.id,
             reservation.date_reservation,
             reservation.hour_reservation,
-            reservation.room_number
+            reservation.room_number,
+            reservation.service_id
         )
-        self.conexion.execute_query(insert_reservation, reservation_data)
 
-        # Obtener el id_reservation generado automáticamente
-        new_id_result = self.conexion.fetch_one("SELECT LAST_INSERT_ID() as last_id")
-        if new_id_result:
-            new_id = new_id_result.get('last_id')
-            return new_id 
+        new_id = self.conexion.execute_query(insert_reservation, reservation_data)
+        if new_id:
+            return new_id
         else:
             raise Exception("No se pudo obtener el ID de la reserva.")
 
     def get_reservas_by_cliente(self, user_id):
         query = """
             SELECT r.id_reservation, r.date_reservation, r.hour_reservation,
-                   r.room_number,
+                   r.room_number, r.service_id,
                    u.id as user_id, u.name, u.last_name, u.email, u.password, u.status
             FROM reservations r
             JOIN users u ON r.user_id = u.id
@@ -71,6 +69,7 @@ class ReservationRepository:
                     room_number=row['room_number']
                 )
                 reserva.id_reservation = row['id_reservation']
+                reserva.service_id = row['service_id']  # <- se añade el servicio
                 reservas.append(reserva)
 
         return reservas

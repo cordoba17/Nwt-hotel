@@ -36,6 +36,7 @@ class Conexion:
         """
         Ejecuta consultas INSERT, UPDATE, DELETE o SELECT.
         Para SELECT devuelve lista de tuplas (no diccionarios).
+        Para INSERT devuelve lastrowid.
         """
         self.connect()  # asegurar conexión activa antes de ejecutar
         cursor = self.connection.cursor(buffered=True)
@@ -46,7 +47,9 @@ class Conexion:
                 return result  # lista de tuplas
             else:
                 self.connection.commit()
-                print("Consulta ejecutada exitosamente")
+                # Retorna lastrowid solo si es INSERT
+                if query.strip().lower().startswith('insert'):
+                    return cursor.lastrowid
                 return None
         except mysql.connector.Error as err:
             print("Error al ejecutar la consulta:", err)

@@ -12,6 +12,7 @@ class Reservation:
         self._hour_reservation = hour_reservation
         self._room_number = room_number
         self._id_reservation = None  # Inicializado como None hasta que se cree en la BD
+        self._service_id = None  # Si quieres agregar servicio
 
     @property
     def id_reservation(self):
@@ -44,3 +45,11 @@ class Reservation:
     @room_number.setter
     def room_number(self, value):
         self._room_number = value
+
+    @property
+    def service_id(self):
+        return self._service_id
+
+    @service_id.setter
+    def service_id(self, value):
+        self._service_id = value
